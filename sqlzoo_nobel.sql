@@ -53,6 +53,22 @@ SELECT winner, subject
  WHERE yr=1984
  ORDER BY subject IN ('Physics','Chemistry'),subject,winner;
 
+#Show the name of winner's names beginning with C and ending in n
+select winner from nobel where winner like 'C%' and winner like '%n';
+
+#Shows how many Chemistry awards were given between 1950 and 1960
+select count(subject) from nobel where subject='Chemistry' and yr between 1950 and 1960;
+
+#Shows the amount of years where no Medicine awards were given
+select count(distinct yr) from nobel where yr
+NOT IN (select distinct yr from nobel where subject='Medicine');
+
+#show the year when neither a Physics or Chemistry award was given
+select yr from nobel where yr NOT IN (select yr from nobel where subject IN ('Physics','Chemistry'));
+
+#shows the years when a Medicine award was given but no Peace or Literature award was
+select yr from nobel where subject='Medicine' and yr NOT IN
+(select yr from nobel where subject IN ('Peace','Literature'));
 
 
 
